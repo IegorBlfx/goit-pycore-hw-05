@@ -1,7 +1,7 @@
 from functools import wraps
 
 
-def input_error(func):
+def input_error(func): # wraps decorator to handle exceptions and return user-friendly messages
     @wraps(func)
     def inner(*args, **kwargs):
         try:
@@ -16,7 +16,7 @@ def input_error(func):
     return inner
 
 
-def parse_input(user_input):
+def parse_input(user_input): # splits the user input into command and arguments
     parts = user_input.split()
     if not parts:
         return "",
@@ -25,14 +25,14 @@ def parse_input(user_input):
 
 
 @input_error
-def add_contact(args, contacts):
+def add_contact(args, contacts):    # adds a new contact to the contacts dictionary
     name, phone = args
     contacts[name] = phone
     return "Contact added."
 
 
 @input_error
-def change_contact(args, contacts):
+def change_contact(args, contacts):     # changes the phone number of an existing contact in the contacts dictionary
     name, phone = args
     if name not in contacts:
         raise KeyError(name)
@@ -41,18 +41,18 @@ def change_contact(args, contacts):
 
 
 @input_error
-def show_phone(args, contacts):
+def show_phone(args, contacts):     # shows the phone number of a contact in the contacts dictionary
     name = args[0]
     return f"{name}: {contacts[name]}"
 
 
-def show_all(contacts):
+def show_all(contacts):     # shows all contacts in the contacts dictionary
     if not contacts:
         return "No contacts found."
     return "\n".join(f"{name}: {phone}" for name, phone in contacts.items())
 
 
-def main():
+def main():     #   main function to run the assistant bot
     contacts = {}
     print("Welcome to the assistant bot!")
     while True:
